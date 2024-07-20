@@ -1,15 +1,15 @@
 import torch
 
-# Check if CUDA is available
-if torch.cuda.is_available():
-    # Set a random seed for CUDA tensors
-    torch.cuda.manual_seed(123)
-    
-    # Example: Create a random CUDA tensor
-    device = torch.device("cuda")
-    tensor = torch.randn(3, 3, device=device)
-    
-    # Use the tensor for operations
-    print(tensor)
+print("PyTorch version:", torch.__version__)
+print("CUDA version:", torch.version.cuda)
+print("cuDNN version:", torch.backends.cudnn.version())
+
+cuda_available = torch.cuda.is_available()
+print("CUDA available:", cuda_available)
+
+if cuda_available:
+    print("Number of GPUs:", torch.cuda.device_count())
+    for i in range(torch.cuda.device_count()):
+        print(f"GPU {i}: {torch.cuda.get_device_name(i)}")
 else:
-    print("CUDA is not available. Install CUDA-enabled PyTorch for GPU support.")
+    print("No CUDA GPUs detected.")
